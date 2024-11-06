@@ -7,11 +7,10 @@ namespace BethanysPieShopHRM.Components.Pages
     {
         public List<Employee> Employees { get; set; } = default!;
 
-        protected override Task OnInitializedAsync()
+        protected async override Task OnInitializedAsync()
         {
+            await Task.Delay(2000);
             Employees = MockDataService.Employees;
-
-            return base.OnInitializedAsync();
         }
     }
 }
