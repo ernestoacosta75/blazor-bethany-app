@@ -1,11 +1,20 @@
 using BethanysPieShopHRM.Components;
+using BethanysPieShopHRM.Infrastructure.DependencyResolver;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Getting configuration
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .Build();
 
 // Add services to the container.
 builder.Services
     .AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddInfrastructure(configuration);
 
 var app = builder.Build();
 
