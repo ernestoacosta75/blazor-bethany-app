@@ -7,9 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BethanysPieShopHRM", "Betha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BethanysPieShopHRM.Shared", "BethanysPieShopHRM.Shared\BethanysPieShopHRM.Shared.csproj", "{569B0E47-767E-4D2C-AD8B-5B3D92DA8A9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanysPieShopHTM.Core.DomainServices", "BethanysPieShopHTM.Core.DomainServices\BethanysPieShopHTM.Core.DomainServices.csproj", "{9F4BFF51-D36E-4BE4-B649-EF1F5E3F6BB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BethanysPieShopHTM.Core.DomainServices", "BethanysPieShopHTM.Core.DomainServices\BethanysPieShopHTM.Core.DomainServices.csproj", "{9F4BFF51-D36E-4BE4-B649-EF1F5E3F6BB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanysPieShopHRM.Infrastructure", "BethanysPieShopHRM.Infrastructure\BethanysPieShopHRM.Infrastructure.csproj", "{4B8322EA-47C8-451F-AD47-F90678C11BE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BethanysPieShopHRM.Infrastructure", "BethanysPieShopHRM.Infrastructure\BethanysPieShopHRM.Infrastructure.csproj", "{4B8322EA-47C8-451F-AD47-F90678C11BE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanysPieShopH.Application.Services", "BethanysPieShopH.Application.Services\BethanysPieShopH.Application.Services.csproj", "{BFCD99F0-83A7-450C-8C49-6AC9EC152B39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanysPieShopHRM.Application", "BethanysPieShopHRM.Application\BethanysPieShopHRM.Application.csproj", "{8E1A5505-3E6F-4824-B6EF-028168ECA97E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{4B8322EA-47C8-451F-AD47-F90678C11BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B8322EA-47C8-451F-AD47-F90678C11BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B8322EA-47C8-451F-AD47-F90678C11BE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFCD99F0-83A7-450C-8C49-6AC9EC152B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFCD99F0-83A7-450C-8C49-6AC9EC152B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFCD99F0-83A7-450C-8C49-6AC9EC152B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFCD99F0-83A7-450C-8C49-6AC9EC152B39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E1A5505-3E6F-4824-B6EF-028168ECA97E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E1A5505-3E6F-4824-B6EF-028168ECA97E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E1A5505-3E6F-4824-B6EF-028168ECA97E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E1A5505-3E6F-4824-B6EF-028168ECA97E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

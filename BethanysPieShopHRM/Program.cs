@@ -1,3 +1,4 @@
+using BethanysPieShopH.Application.Services.DependencyResolver;
 using BethanysPieShopHRM.Components;
 using BethanysPieShopHRM.Infrastructure.DependencyResolver;
 
@@ -15,6 +16,7 @@ builder.Services
     .AddInteractiveServerComponents();
 
 builder.Services.AddInfrastructure(configuration);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
