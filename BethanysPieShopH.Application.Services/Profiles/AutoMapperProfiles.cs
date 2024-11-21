@@ -8,7 +8,15 @@ namespace BethanysPieShopH.Application.Services.Profiles
     {
         public AutoMapperProfiles()
         {
-            CreateMap<Employee, EmployeeDto>().ReverseMap();
+            CreateMap<Employee, EmployeeDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EmployeeId))
+                .ForMember(dest => dest.CountryId, opt => opt.MapFrom(src => src.CountryId))
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country))
+                .ReverseMap();
+
+            CreateMap<Country, CountryDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CountryId))
+                .ReverseMap();
         }
     }
 }

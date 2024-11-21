@@ -1,4 +1,5 @@
-﻿using BethanysPieShopHRM.Shared.Domain;
+﻿using BethanysPieShopHRM.Application.Dtos;
+using BethanysPieShopHRM.Shared.Domain;
 using Microsoft.AspNetCore.Components;
 
 namespace BethanysPieShopHRM.Components
@@ -6,9 +7,9 @@ namespace BethanysPieShopHRM.Components
     public partial  class QuickViewPopup
     {
         [Parameter]
-        public Employee? Employee { get; set; }
+        public EmployeeDto? Employee { get; set; }
 
-        private Employee? _employee;    // To be used in the UI
+        private EmployeeDto? _employee;    // To be used in the UI
 
         protected override void OnParametersSet()
         {

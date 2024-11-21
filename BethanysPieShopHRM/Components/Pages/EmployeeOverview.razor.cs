@@ -1,21 +1,23 @@
-﻿using BethanysPieShopHRM.Services;
-using BethanysPieShopHRM.Shared.Domain;
+﻿using BethanysPieShopHRM.Application.Dtos;
+using BethanysPieShopHRM.Application.Services.Employees;
+using Microsoft.AspNetCore.Components;
 
 namespace BethanysPieShopHRM.Components.Pages
 {
     public partial class EmployeeOverview
     {
-        public List<Employee> Employees { get; set; } = default!;
-        private Employee? _selectedEmployee;
+        public List<EmployeeDto> Employees { get; set; } = default!;
+        private EmployeeDto? _selectedEmployee;
         private string Title = "Employee overview";
 
+        [Inject]
+        public IEmployeeService? EmployeeService { get; set; }
         protected async override Task OnInitializedAsync()
         {
-            //await Task.Delay(2000);
-            Employees = MockDataService.Employees;
+            Employees = (await EmployeeService.GetAllEmployees()).ToList();
         }
 
-        public void ShowQuickViewPopup(Employee selectedEmployee)
+        public void ShowQuickViewPopup(EmployeeDto selectedEmployee)
         {
             _selectedEmployee = selectedEmployee;
         }

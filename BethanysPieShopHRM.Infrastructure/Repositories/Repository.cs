@@ -12,6 +12,7 @@ namespace BethanysPieShopHRM.Infrastructure.Repositories
         public Repository(IDbContextFactory<AppDbContext> dbContextFactory)
         {
             _appDbContext = dbContextFactory.CreateDbContext();
+            _dbSet = _appDbContext.Set<TEntity>();
         }
 
         public async Task<TEntity?> GetById(int id)

@@ -1,4 +1,5 @@
-﻿using BethanysPieShopHRM.Shared.Domain;
+﻿using BethanysPieShopHRM.Application.Dtos;
+using BethanysPieShopHRM.Shared.Domain;
 using Microsoft.AspNetCore.Components;
 
 namespace BethanysPieShopHRM.Components
@@ -6,11 +7,11 @@ namespace BethanysPieShopHRM.Components
     public partial class EmployeeCard
     {
         [Parameter]
-        public Employee Employee { get; set; } = default!;
+        public EmployeeDto Employee { get; set; } = default!;
 
         // Events
         [Parameter] 
-        public EventCallback<Employee> EmployeeQuickViewClicked { get; set; }
+        public EventCallback<EmployeeDto> EmployeeQuickViewClicked { get; set; }
 
         protected override void OnInitialized()
         {
