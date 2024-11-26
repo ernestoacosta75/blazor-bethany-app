@@ -3,6 +3,7 @@ using BethanysPieShopH.Application.Services.Employees;
 using BethanysPieShopH.Application.Services.Profiles;
 using BethanysPieShopHRM.Application.Services.Countries;
 using BethanysPieShopHRM.Application.Services.Employees;
+using BethanysPieShopHRM.Application.State;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BethanysPieShopH.Application.Services.DependencyResolver
@@ -14,6 +15,7 @@ namespace BethanysPieShopH.Application.Services.DependencyResolver
             services.AddAutoMapper(typeof(AutoMapperProfiles));
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<ApplicationState>();
         }
     }
 }
