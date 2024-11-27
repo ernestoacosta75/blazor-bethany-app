@@ -1,5 +1,6 @@
 ﻿using BethanysPieShopHTM.Core.DomainServices.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -22,7 +23,10 @@ namespace BethanysPieShopHTM.Core.DomainServices.DependencyResolver
             // The reason is that the database contex would then be shared across components across the circuit,
             // which can cause problems.
             services.AddDbContextFactory<AppDbContext>(options =>
-                    options.UseSqlServer(connectionString, sqlServer =>
+                    options
+                        .ConfigureWarnings(warnings =>
+                            warnings.Ignore(RelationalEventId.PendingModelChangesWarning))
+                        .UseSqlServer(connectionString, sqlServer =>
                         {
                             sqlServer.UseNetTopologySuite();
                         })
