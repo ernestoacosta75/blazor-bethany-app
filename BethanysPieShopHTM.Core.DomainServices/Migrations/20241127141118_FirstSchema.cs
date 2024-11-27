@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace BethanysPieShopHTM.Core.DomainServices.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class FirstSchema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -78,6 +80,43 @@ namespace BethanysPieShopHTM.Core.DomainServices.Migrations
                         principalTable: "JobCategories",
                         principalColumn: "JobCategoryId");
                 });
+
+            migrationBuilder.InsertData(
+                table: "Countries",
+                columns: new[] { "CountryId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Belgium" },
+                    { 2, "Germany" },
+                    { 3, "Netherlands" },
+                    { 4, "USA" },
+                    { 5, "Japan" },
+                    { 6, "China" },
+                    { 7, "UK" },
+                    { 8, "France" },
+                    { 9, "Brazil" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "JobCategories",
+                columns: new[] { "JobCategoryId", "JobCategoryName" },
+                values: new object[,]
+                {
+                    { 1, "Pie research" },
+                    { 2, "Sales" },
+                    { 3, "Management" },
+                    { 4, "Store staff" },
+                    { 5, "Finance" },
+                    { 6, "QA" },
+                    { 7, "IT" },
+                    { 8, "Cleaning" },
+                    { 9, "Bakery" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "EmployeeId", "BirthDate", "City", "Comment", "CountryId", "Email", "ExitDate", "FirstName", "Gender", "ImageName", "IsOnHoliday", "JobCategoryId", "JoinedDate", "LastName", "Latitude", "Longitude", "MaritalStatus", "PhoneNumber", "Smoker", "Street", "Zip" },
+                values: new object[] { 1, new DateTime(1979, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), "Brussels", "Lorem Ipsum", 1, "bethany@bethanyspieshop.com", null, "Bethany", 1, null, false, 1, new DateTime(2015, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Smith", 50.850299999999997, 4.3517000000000001, 1, "324777888773", false, "Grote Markt 1", "1000" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_CountryId",

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BethanysPieShopHTM.Core.DomainServices.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241121094325_DataAdded")]
-    partial class DataAdded
+    [Migration("20241127141118_FirstSchema")]
+    partial class FirstSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
