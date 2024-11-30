@@ -12,11 +12,12 @@ namespace BethanysPieShopHTM.Core.DomainServices.DatabaseContext
         
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            
+            ArgumentNullException.ThrowIfNull(options);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            ArgumentNullException.ThrowIfNull(modelBuilder);
             base.OnModelCreating(modelBuilder);
 
             //seed categories

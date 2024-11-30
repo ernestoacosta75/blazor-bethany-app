@@ -1,4 +1,5 @@
 ﻿using BethanysPieShopHRM.Infrastructure.Repositories;
+using BethanysPieShopHRM.Shared.Domain;
 using BethanysPieShopHTM.Core.DomainServices.DependencyResolver;
 using BethanysPieShopHTM.Core.DomainServices.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ namespace BethanysPieShopHRM.Infrastructure.DependencyResolver
             services.AddDatabaseContext(configuration);
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<ITimeRegistrationRepository<TimeRegistration>, TimeRegistrationRepository>();
         }
     }
 }

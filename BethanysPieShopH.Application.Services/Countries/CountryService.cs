@@ -15,17 +15,22 @@ namespace BethanysPieShopH.Application.Services.Countries
 
         public CountryService(IRepository<Country> countryRepository, IMapper mapper)
         {
+            ArgumentNullException.ThrowIfNull(countryRepository);
+            ArgumentNullException.ThrowIfNull(mapper);
+
             _countryRepository = countryRepository;
             _mapper = mapper;
         }
 
         public void AddCountry(CountryDto countryDto)
         {
+            ArgumentNullException.ThrowIfNull(countryDto);
             _countryRepository.Add(_mapper.Map<Country>(countryDto));
         }
 
         public async Task UpdateCountry(CountryDto countryDto)
         {
+            ArgumentNullException.ThrowIfNull(countryDto);
             var existingCountry = await _countryRepository.GetById(countryDto.Id);
 
             if (existingCountry != null)
@@ -37,6 +42,7 @@ namespace BethanysPieShopH.Application.Services.Countries
 
         public async Task RemoveCountry(CountryDto countryDto)
         {
+            ArgumentNullException.ThrowIfNull(countryDto);
             var countryToDelete = await _countryRepository.GetById(countryDto.Id);
 
             if (countryToDelete != null)
@@ -47,6 +53,7 @@ namespace BethanysPieShopH.Application.Services.Countries
 
         public async Task<CountryDto?> GetCountryById(int countryId)
         {
+            ArgumentNullException.ThrowIfNull(countryId);
             var country = await _countryRepository.GetById(countryId);
             return _mapper.Map<CountryDto>(country);
         }

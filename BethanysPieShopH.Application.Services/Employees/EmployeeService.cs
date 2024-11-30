@@ -14,17 +14,22 @@ namespace BethanysPieShopH.Application.Services.Employees
 
         public EmployeeService(IRepository<Employee> employeeRepository, IMapper mapper)
         {
+            ArgumentNullException.ThrowIfNull(employeeRepository);
+            ArgumentNullException.ThrowIfNull(mapper);
+
             _employeeRepository = employeeRepository;
             _mapper = mapper;
         }
 
         public void AddEmployee(EmployeeDto employeeDto)
         {
+            ArgumentNullException.ThrowIfNull(employeeDto);
             _employeeRepository.Add(_mapper.Map<Employee>(employeeDto));
         }
 
         public async Task UpdateEmployee(EmployeeDto employeeDto)
         {
+            ArgumentNullException.ThrowIfNull(employeeDto);
             var existingEmployee = await _employeeRepository.GetById(employeeDto.Id);
 
             if (existingEmployee != null)
@@ -36,6 +41,7 @@ namespace BethanysPieShopH.Application.Services.Employees
 
         public async Task RemoveEmployee(EmployeeDto employeeDto)
         {
+            ArgumentNullException.ThrowIfNull(employeeDto);
             var employeeToDelete = await _employeeRepository.GetById(employeeDto.Id);
 
             if (employeeToDelete != null)
@@ -46,6 +52,7 @@ namespace BethanysPieShopH.Application.Services.Employees
 
         public async Task<EmployeeDto?> GetEmployeeById(int employeeId)
         {
+            ArgumentNullException.ThrowIfNull(employeeId);
             var employee = await _employeeRepository.GetById(employeeId);
             return _mapper.Map<EmployeeDto>(employee);
         }

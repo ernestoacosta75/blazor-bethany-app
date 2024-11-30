@@ -17,6 +17,9 @@ namespace BethanysPieShopH.Application.Services.Profiles
             CreateMap<Country, CountryDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CountryId))
                 .ReverseMap();
+
+            CreateMap<TimeRegistration, TimeRegistrationDto>()
+                .ReverseMap();
         }
     }
 }
