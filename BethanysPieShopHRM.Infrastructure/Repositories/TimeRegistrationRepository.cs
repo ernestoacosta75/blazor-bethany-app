@@ -2,38 +2,42 @@
 using BethanysPieShopHTM.Core.DomainServices.DatabaseContext;
 using BethanysPieShopHTM.Core.DomainServices.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace BethanysPieShopHRM.Infrastructure.Repositories
 {
     public class TimeRegistrationRepository : Repository<TimeRegistration>, ITimeRegistrationRepository<TimeRegistration>
     {
-        private readonly AppDbContext _appDbContext;
+        private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
 
         public TimeRegistrationRepository(IDbContextFactory<AppDbContext> dbContextFactory) : base(dbContextFactory)
         {
-            _appDbContext = dbContextFactory.CreateDbContext();
+            _dbContextFactory = dbContextFactory;
         }
 
-        public IQueryable<TimeRegistration> GetTimeRegistrationForEmployee(int employeeId)
+        public async Task<List<TimeRegistration>> GetTimeRegistrationForEmployee(int employeeId)
         {
-            return _appDbContext.TimeRegistrations
+            return await _dbContextFactory.CreateDbContext().TimeRegistrations
                 .Where(_ => _.EmployeeId == employeeId)
-                .OrderBy(_ => _.StartTime);
+                .OrderBy(_ => _.StartTime)
+                .ToListAsync();
         }
 
-        public IQueryable<TimeRegistration> GetPagedTimeRegistrationForEmployee(
+        public async Task<List<TimeRegistration>> GetPagedTimeRegistrationForEmployee(
             int employeeId, int pageSize, int start)
         {
-            return _appDbContext.TimeRegistrations
+            return await _dbContextFactory.CreateDbContext().TimeRegistrations
+                .AsNoTracking()
                 .Where(_ => _.EmployeeId == employeeId)
                 .OrderBy(_ => _.StartTime)
                 .Skip(start)
-                .Take(pageSize);
+                .Take(pageSize)
+                .ToListAsync();
         }
 
         public async Task<int> GetTimeRegistrationCountForEmployeeId(int employeeId)
         {
-            return await _appDbContext.TimeRegistrations
+            return await _dbContextFactory.CreateDbContext().TimeRegistrations
                 .Where(_ => _.EmployeeId == employeeId)
                 .CountAsync();
         }

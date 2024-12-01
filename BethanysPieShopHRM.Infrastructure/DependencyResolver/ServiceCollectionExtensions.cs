@@ -12,7 +12,6 @@ namespace BethanysPieShopHRM.Infrastructure.DependencyResolver
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDatabaseContext(configuration);
-
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ITimeRegistrationRepository<TimeRegistration>, TimeRegistrationRepository>();
         }

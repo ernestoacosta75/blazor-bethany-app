@@ -12466,3 +12466,8 @@ h6, .h6 {
 .profile-picture {
     opacity: 0.7 !important;
 }
+
+.virtualized {
+    max-height: 500px;
+    overflow-y: auto;
+}

@@ -132,23 +132,17 @@
         </div>
         
         <h2>Time registrations</h2>
-        @if (TimeRegistrations.Count == 0)
-        {
-            <p><em>Loading time registrations...</em></p>
-        }
-        else
-        {
-            <div class="virtualized">
-                <table class="table">
-                    <thead>
+        <div class="virtualized">
+            <table class="table">
+                <thead>
                     <tr>
                         <th>ID</th>
                         <th>Start time</th>
                         <th>End time</th>
                         <th>Task</th>
-                    </tr> 
-                    </thead>
-                    <tbody>
+                    </tr>
+                </thead>
+                <tbody>
                     <Virtualize ItemsProvider="LoadTimeRegistrations" ItemSize="itemHeight">
                         <ItemContent>
                             <tr>
@@ -167,9 +161,8 @@
                             </tr>
                         </Placeholder>
                     </Virtualize>
-                    </tbody>
-                </table>
-            </div>
-        }
+                </tbody>
+            </table>
+        </div>
     </div>
 </section>

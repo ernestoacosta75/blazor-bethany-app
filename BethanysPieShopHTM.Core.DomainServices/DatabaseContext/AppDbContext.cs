@@ -20,6 +20,10 @@ namespace BethanysPieShopHTM.Core.DomainServices.DatabaseContext
             ArgumentNullException.ThrowIfNull(modelBuilder);
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<TimeRegistration>()
+                .HasIndex(_ => new { _.EmployeeId, _.StartTime })
+                .HasDatabaseName("IX_TimeRegistrations_EmployeeId_StartTime");
+
             //seed categories
             modelBuilder.Entity<Country>().HasData(new Country { CountryId = 1, Name = "Belgium" });
             modelBuilder.Entity<Country>().HasData(new Country { CountryId = 2, Name = "Germany" });

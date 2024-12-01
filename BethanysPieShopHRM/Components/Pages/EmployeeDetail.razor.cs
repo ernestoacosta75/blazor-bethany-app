@@ -24,20 +24,14 @@ namespace BethanysPieShopHRM.Components.Pages
         [Inject]
         public ITimeRegistrationService? TimeRegistrationService { get; set; }
         
-        protected override async void OnInitialized()
+        protected override async Task OnParametersSetAsync()
         {
             if (EmployeeService is not null)
             {
                 Employee = (await EmployeeService.GetEmployeeById(EmployeeId))!;
             }
-
-            if (TimeRegistrationService is not null)
-            {
-                TimeRegistrations = await TimeRegistrationService
-                    .GetTimeRegistrationsForEmployee(EmployeeId);
-                Console.WriteLine("List Count: " + TimeRegistrations.Count);
-            }
         }
+
 
         public async ValueTask<ItemsProviderResult<TimeRegistrationDto>> LoadTimeRegistrations(
             ItemsProviderRequest request)
