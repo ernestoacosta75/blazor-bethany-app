@@ -2,7 +2,6 @@
 using BethanysPieShopHTM.Core.DomainServices.DatabaseContext;
 using BethanysPieShopHTM.Core.DomainServices.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace BethanysPieShopHRM.Infrastructure.Repositories
 {

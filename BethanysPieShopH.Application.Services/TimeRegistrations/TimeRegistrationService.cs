@@ -26,19 +26,35 @@ namespace BethanysPieShopH.Application.Services.TimeRegistrations
         }
         public async Task<List<TimeRegistrationDto>> GetTimeRegistrationsForEmployee(int employeeId)
         {
-            var timeRegistrations = await _timeRegistrationRepository
-                .GetTimeRegistrationForEmployee(employeeId);
+            string cacheKey = $"TimeRegistrations_{employeeId}";
 
-            return _mapper
-                .Map<List<TimeRegistrationDto>>(timeRegistrations.OrderBy(_ => _.StartTime));
+            if (!_cacheService.TryGet(cacheKey, out List<TimeRegistrationDto> timeRegistrations))
+            {
+                var timeRegistrationsEntities = await _timeRegistrationRepository
+                    .GetTimeRegistrationForEmployee(employeeId);
+
+                timeRegistrations = _mapper
+                    .Map<List<TimeRegistrationDto>>(timeRegistrationsEntities.OrderBy(_ => _.StartTime))
+                    .Select(_ => new TimeRegistrationDto
+                    {
+                        TimeRegistrationId = _.TimeRegistrationId,
+                        StartTime = _.StartTime,
+                        EndTime = _.EndTime,
+                        PerformedTaskDescription = _.PerformedTaskDescription,
+                    })
+                    .ToList();
+
+                _cacheService.Set(cacheKey, timeRegistrations, TimeSpan.FromMinutes(10));
+            }
+                
+
+            return timeRegistrations;
         }
 
         public async Task<List<TimeRegistrationDto>> GetPagedTimeRegistrationForEmployee(
             int employeeId, int pageSize, int start)
         {
             string cacheKey = $"TimeRegistrations_{employeeId}_{pageSize}_{start}";
-            var timeRegistrationDtos = new List<TimeRegistrationDto>();
-
 
             if (!_cacheService.TryGet(cacheKey, out List<TimeRegistrationDto> timeRegistrations))
             {
@@ -56,7 +72,7 @@ namespace BethanysPieShopH.Application.Services.TimeRegistrations
                 })
                 .ToList();
 
-                _cacheService.Set(cacheKey, timeRegistrationDtos, TimeSpan.FromMinutes(10));
+                _cacheService.Set(cacheKey, timeRegistrations, TimeSpan.FromMinutes(10));
             }
                 
             return timeRegistrations;

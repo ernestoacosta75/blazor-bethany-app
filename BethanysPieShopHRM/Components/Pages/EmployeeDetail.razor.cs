@@ -1,10 +1,9 @@
 ﻿using BethanysPieShopHRM.Application.Dtos;
 using BethanysPieShopHRM.Application.Services.Employees;
 using BethanysPieShopHRM.Application.Services.TimeRegistrations;
-using BethanysPieShopHRM.Shared.Domain;
-using BethanysPieShopHTM.Core.DomainServices.DatabaseContext;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web.Virtualization;
+using Microsoft.AspNetCore.Components.QuickGrid;
 
 namespace BethanysPieShopHRM.Components.Pages
 {
@@ -18,6 +17,11 @@ namespace BethanysPieShopHRM.Components.Pages
 
         private float itemHeight = 50;
 
+        protected IQueryable<TimeRegistrationDto>? itemsQueryable;
+        protected int queryableCount = 0;
+
+        public PaginationState pagination = new() { ItemsPerPage = 10 };
+
         [Inject]
         public IEmployeeService? EmployeeService { get; set; }
 
@@ -30,6 +34,11 @@ namespace BethanysPieShopHRM.Components.Pages
             {
                 Employee = (await EmployeeService.GetEmployeeById(EmployeeId))!;
             }
+
+            itemsQueryable = (await TimeRegistrationService.GetTimeRegistrationsForEmployee(EmployeeId))
+                .AsQueryable();
+
+            queryableCount = itemsQueryable.Count();
         }
 
 
