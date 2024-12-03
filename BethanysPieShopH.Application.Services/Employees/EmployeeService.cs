@@ -21,33 +21,27 @@ namespace BethanysPieShopH.Application.Services.Employees
             _mapper = mapper;
         }
 
-        public void AddEmployee(EmployeeDto employeeDto)
+        public async Task<EmployeeDto?> AddEmployee(EmployeeDto employeeDto)
         {
             ArgumentNullException.ThrowIfNull(employeeDto);
-            _employeeRepository.Add(_mapper.Map<Employee>(employeeDto));
+            var employee =  await _employeeRepository.Add(_mapper.Map<Employee>(employeeDto));
+            
+            return _mapper.Map<EmployeeDto>(employee);
         }
 
-        public async Task UpdateEmployee(EmployeeDto employeeDto)
+        public async Task<EmployeeDto?> UpdateEmployee(EmployeeDto employeeDto)
         {
             ArgumentNullException.ThrowIfNull(employeeDto);
-            var existingEmployee = await _employeeRepository.GetById(employeeDto.Id);
 
-            if (existingEmployee != null)
-            {
-                _mapper.Map(employeeDto, existingEmployee);
-                _employeeRepository.Update(existingEmployee);
-            }
+            var employee = _employeeRepository.Update(employeeDto?.Id, _mapper.Map<Employee>(employeeDto));
+
+            return _mapper.Map<EmployeeDto>(employee);
         }
 
-        public async Task RemoveEmployee(EmployeeDto employeeDto)
+        public async Task RemoveEmployee(int employeeId)
         {
-            ArgumentNullException.ThrowIfNull(employeeDto);
-            var employeeToDelete = await _employeeRepository.GetById(employeeDto.Id);
-
-            if (employeeToDelete != null)
-            {
-                _employeeRepository.Delete(employeeToDelete);
-            }
+            ArgumentNullException.ThrowIfNull(employeeId);
+            await _employeeRepository.Delete(employeeId);
         }
 
         public async Task<EmployeeDto?> GetEmployeeById(int employeeId)

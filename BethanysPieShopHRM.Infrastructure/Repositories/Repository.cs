@@ -25,24 +25,40 @@ namespace BethanysPieShopHRM.Infrastructure.Repositories
             return _dbSet.AsQueryable();
         }
 
-        public void Add(TEntity entity)
+        public async Task<TEntity?> Add(TEntity entity)
         {
-            _dbSet.Add(entity);
+            var addedEntity = await _dbSet.AddAsync(entity);
+            await _appDbContext.SaveChangesAsync();
+
+            return addedEntity.Entity;
         }
 
-        public void Update(TEntity entity)
+        public async Task<TEntity?> Update(int? id, TEntity entity)
         {
-            _dbSet.Update(entity);
-        }
+            var employeeEntity = await _dbSet.FindAsync(id);
 
-        public void Delete(TEntity entity)
-        {
-            if (_appDbContext.Entry(entity).State == EntityState.Detached)
+            if (employeeEntity != null)
             {
-                _dbSet.Attach(entity);
+                _dbSet.Update(entity);
+                await _appDbContext.SaveChangesAsync();
+
+                return employeeEntity;
             }
 
-            _dbSet.Remove(entity);
+            return null;
+        }
+
+        public async Task Delete(int id)
+        {
+            var employeeEntity = await _dbSet.FindAsync(id);
+
+            if (employeeEntity == null)
+            {
+                return;
+            }
+
+            _dbSet.Remove(employeeEntity);
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }

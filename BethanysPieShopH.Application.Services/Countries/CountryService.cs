@@ -22,33 +22,27 @@ namespace BethanysPieShopH.Application.Services.Countries
             _mapper = mapper;
         }
 
-        public void AddCountry(CountryDto countryDto)
+        public async Task<CountryDto?> AddCountry(CountryDto countryDto)
         {
             ArgumentNullException.ThrowIfNull(countryDto);
-            _countryRepository.Add(_mapper.Map<Country>(countryDto));
+            var country = await _countryRepository.Add(_mapper.Map<Country>(countryDto));
+
+            return _mapper.Map<CountryDto>(country);
         }
 
-        public async Task UpdateCountry(CountryDto countryDto)
+        public async Task<CountryDto?> UpdateCountry(CountryDto countryDto)
         {
             ArgumentNullException.ThrowIfNull(countryDto);
-            var existingCountry = await _countryRepository.GetById(countryDto.Id);
 
-            if (existingCountry != null)
-            {
-                _mapper.Map(countryDto, existingCountry);
-                _countryRepository.Update(existingCountry);
-            }
+            var country = _countryRepository.Update(countryDto?.Id, _mapper.Map<Country>(countryDto));
+
+            return _mapper.Map<CountryDto>(country);
         }
 
-        public async Task RemoveCountry(CountryDto countryDto)
+        public async Task RemoveCountry(int countryId)
         {
-            ArgumentNullException.ThrowIfNull(countryDto);
-            var countryToDelete = await _countryRepository.GetById(countryDto.Id);
-
-            if (countryToDelete != null)
-            {
-                _countryRepository.Delete(countryToDelete);
-            }
+            ArgumentNullException.ThrowIfNull(countryId);
+            await _countryRepository.Delete(countryId);
         }
 
         public async Task<CountryDto?> GetCountryById(int countryId)

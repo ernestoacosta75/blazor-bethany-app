@@ -4,8 +4,8 @@
     {
         Task<TEntity?> GetById(int id);
         IQueryable<TEntity> GetAll();
-        void Add(TEntity entity);
-        void Update(TEntity entity);
-        void Delete(TEntity entity);
+        Task<TEntity?> Add(TEntity entity);
+        Task<TEntity?> Update(int? id, TEntity entity);
+        Task Delete(int id);
     }
 }

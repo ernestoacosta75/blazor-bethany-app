@@ -4,9 +4,9 @@ namespace BethanysPieShopHRM.Application.Services.Countries
 {
     public interface ICountryService
     {
-        void AddCountry(CountryDto countryDto);
-        Task UpdateCountry(CountryDto countryDto);
-        Task RemoveCountry(CountryDto countryDto);
+        Task<CountryDto?> AddCountry(CountryDto countryDto);
+        Task<CountryDto?> UpdateCountry(CountryDto countryDto);
+        Task RemoveCountry(int countryId);
         Task<CountryDto?> GetCountryById(int countryId);
         Task<IEnumerable<CountryDto>> GetAllCountries();
     }
