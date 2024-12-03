@@ -34,7 +34,7 @@ namespace BethanysPieShopH.Application.Services.Employees
             ArgumentNullException.ThrowIfNull(employeeDto);
 
             var empMapped = _mapper.Map<Employee>(employeeDto);
-            var employee = _employeeRepository.Update(employeeDto?.Id, empMapped);
+            var employee = await _employeeRepository.Update(employeeDto?.Id, empMapped);
 
             return _mapper.Map<EmployeeDto>(employee);
         }

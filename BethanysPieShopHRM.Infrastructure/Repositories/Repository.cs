@@ -27,38 +27,55 @@ namespace BethanysPieShopHRM.Infrastructure.Repositories
 
         public async Task<TEntity?> Add(TEntity entity)
         {
-            var addedEntity = await _dbSet.AddAsync(entity);
-            await _appDbContext.SaveChangesAsync();
+            ArgumentNullException.ThrowIfNull(entity);
 
-            return addedEntity.Entity;
+            try
+            {
+                var addedEntity = await _dbSet.AddAsync(entity);
+                await _appDbContext.SaveChangesAsync();
+
+                return addedEntity.Entity;
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine($"Error adding entity: {ex.Message}");
+                throw;
+            }
         }
 
         public async Task<TEntity?> Update(int? id, TEntity entity)
         {
-            var anEntity = await _dbSet.FindAsync(id);
+            ArgumentNullException.ThrowIfNull(id);
 
-            if (anEntity != null)
+            var existingEntity = await _dbSet.FindAsync(id);
+
+            if (existingEntity == null)
             {
-                _dbSet.Update(entity);
-                await _appDbContext.SaveChangesAsync();
-
-                return anEntity;
+                return null;
             }
 
-            return null;
+            _appDbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
+            await _appDbContext.SaveChangesAsync();
+
+            return existingEntity;
         }
 
         public async Task Delete(int id)
         {
-            var employeeEntity = await _dbSet.FindAsync(id);
+            ArgumentNullException.ThrowIfNull(id);
 
-            if (employeeEntity == null)
+            var entityToDelete = await _dbSet.FindAsync(id);
+
+            try
             {
-                return;
+                _dbSet.Remove(entityToDelete);
+                await _appDbContext.SaveChangesAsync();
             }
-
-            _dbSet.Remove(employeeEntity);
-            await _appDbContext.SaveChangesAsync();
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine($"Error deleting entity with ID {id}: {ex.Message}");
+                throw;
+            }
         }
     }
 }
