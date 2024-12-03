@@ -35,14 +35,14 @@ namespace BethanysPieShopHRM.Infrastructure.Repositories
 
         public async Task<TEntity?> Update(int? id, TEntity entity)
         {
-            var employeeEntity = await _dbSet.FindAsync(id);
+            var anEntity = await _dbSet.FindAsync(id);
 
-            if (employeeEntity != null)
+            if (anEntity != null)
             {
                 _dbSet.Update(entity);
                 await _appDbContext.SaveChangesAsync();
 
-                return employeeEntity;
+                return anEntity;
             }
 
             return null;
