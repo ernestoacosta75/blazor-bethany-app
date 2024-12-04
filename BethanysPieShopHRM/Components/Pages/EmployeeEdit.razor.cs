@@ -2,6 +2,7 @@
 using BethanysPieShopHRM.Application.Services.Countries;
 using BethanysPieShopHRM.Application.Services.Employees;
 using BethanysPieShopHRM.Application.Services.JobCategories;
+using BethanysPieShopHRM.Common;
 using Microsoft.AspNetCore.Components;
 
 namespace BethanysPieShopHRM.Components.Pages
@@ -16,6 +17,9 @@ namespace BethanysPieShopHRM.Components.Pages
 
         [Inject]
         public IJobCategoryService? JobCategoryService { get; set; }
+
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
         [Parameter] 
         public int EmployeeId { get; set; }
@@ -55,15 +59,29 @@ namespace BethanysPieShopHRM.Components.Pages
 
             await EmployeeService.UpdateEmployee(Employee);
             StatusClass = "alert-success";
-            Message = "Employee updated successfully.";
+            Message = Constants.EmployeeUpdatedSuccess;
             Saved = true;
         }
 
         protected void HandleInvalidSubmit()
         {
             StatusClass = "alert-danger";
-            Message = "There are some validation errors. Please try again.";
+            Message = Constants.FormSubmitValidationError;
 
+        }
+
+        protected async Task DeleteEmployee()
+        {
+            await EmployeeService.RemoveEmployee(Employee.Id);
+
+            StatusClass = "alert-success";
+            Message = Constants.EmployeeRemovedSuccess;
+            Saved = true;
+        }
+
+        protected void NavigateToOverview()
+        {
+            NavigationManager.NavigateTo("/employeeoverview");
         }
     }
 }
