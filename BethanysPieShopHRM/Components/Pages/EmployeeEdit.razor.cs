@@ -4,6 +4,7 @@ using BethanysPieShopHRM.Application.Services.Employees;
 using BethanysPieShopHRM.Application.Services.JobCategories;
 using BethanysPieShopHRM.Common;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace BethanysPieShopHRM.Components.Pages
 {
@@ -34,6 +35,8 @@ namespace BethanysPieShopHRM.Components.Pages
         protected string Message = string.Empty;
         protected string StatusClass = string.Empty;
 
+        private IBrowserFile selectedFile;
+
         protected override async Task OnInitializedAsync()
         {
             Saved = false;
@@ -45,17 +48,17 @@ namespace BethanysPieShopHRM.Components.Pages
 
         protected async Task HandleValidSubmit()
         {
-            //if (selectedFile != null)//take first image
-            //{
-            //    var file = selectedFile;
-            //    Stream stream = file.OpenReadStream();
-            //    MemoryStream ms = new();
-            //    await stream.CopyToAsync(ms);
-            //    stream.Close();
+            if (selectedFile != null)   //take first image
+            {
+                var file = selectedFile;
+                Stream stream = file.OpenReadStream();
+                MemoryStream ms = new();
+                await stream.CopyToAsync(ms);
+                stream.Close();
 
-            //    Employee.ImageName = file.Name;
-            //    Employee.ImageContent = ms.ToArray();
-            //}
+                Employee.ImageName = file.Name;
+                Employee.ImageContent = ms.ToArray();
+            }
 
             await EmployeeService.UpdateEmployee(Employee);
             StatusClass = "alert-success";
@@ -82,6 +85,12 @@ namespace BethanysPieShopHRM.Components.Pages
         protected void NavigateToOverview()
         {
             NavigationManager.NavigateTo("/employeeoverview");
+        }
+
+        private void OnInputFileChange(InputFileChangeEventArgs e)
+        {
+            selectedFile = e.File;
+            StateHasChanged();
         }
     }
 }

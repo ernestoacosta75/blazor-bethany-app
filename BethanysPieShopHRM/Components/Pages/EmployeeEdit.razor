@@ -7,11 +7,19 @@
 {
     <section class="employee-edit">
         <h1 class="page-title">Details for @Employee.FirstName @Employee.LastName</h1>
+
         <EditForm Enhance Model="Employee" FormName="EditEmployeeForm" method="post"
                   OnValidSubmit="@HandleValidSubmit"
                   OnInvalidSubmit="@HandleInvalidSubmit">
             
             <DataAnnotationsValidator />
+            
+            <div class="row mb-3">
+                <label form="image" class="col-12 col-sm-3">Select image:</label>
+                <div class="row md-8">
+                    <InputFile OnChange="OnInputFileChange"></InputFile>
+                </div>
+            </div>
 
             <div class="row mb-3">
                 <label for="lastName" class="col-form-label col-md-3">Last name: </label>

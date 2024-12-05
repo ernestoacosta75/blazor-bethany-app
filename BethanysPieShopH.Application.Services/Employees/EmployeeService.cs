@@ -4,6 +4,8 @@ using BethanysPieShopHRM.Application.Services.Employees;
 using BethanysPieShopHRM.Shared.Domain;
 using BethanysPieShopHTM.Core.DomainServices.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace BethanysPieShopH.Application.Services.Employees
 {
@@ -11,14 +13,20 @@ namespace BethanysPieShopH.Application.Services.Employees
     {
         private readonly IRepository<Employee> _employeeRepository;
         private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public EmployeeService(IRepository<Employee> employeeRepository, IMapper mapper)
+        public EmployeeService(IRepository<Employee> employeeRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor)
         {
             ArgumentNullException.ThrowIfNull(employeeRepository);
             ArgumentNullException.ThrowIfNull(mapper);
+            ArgumentNullException.ThrowIfNull(webHostEnvironment);
+            ArgumentNullException.ThrowIfNull(httpContextAccessor);
 
             _employeeRepository = employeeRepository;
             _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<EmployeeDto?> AddEmployee(EmployeeDto employeeDto)
@@ -32,6 +40,18 @@ namespace BethanysPieShopH.Application.Services.Employees
         public async Task<EmployeeDto?> UpdateEmployee(EmployeeDto employeeDto)
         {
             ArgumentNullException.ThrowIfNull(employeeDto);
+
+            if (employeeDto.ImageContent is not null)
+            {
+                string currentUrl = _httpContextAccessor.HttpContext.Request.Host.Value;
+                var path = $"{_webHostEnvironment.WebRootPath}\\uploads\\{employeeDto.ImageName}";
+                var fileStream = System.IO.File.Create(path);
+
+                fileStream.Write(employeeDto.ImageContent, 0, employeeDto.ImageContent.Length);
+                fileStream.Close();
+
+                employeeDto.ImageName = $"https://{currentUrl}/uploads/{employeeDto.ImageName}";
+            }
 
             var empMapped = _mapper.Map<Employee>(employeeDto);
             var employee = await _employeeRepository.Update(employeeDto?.Id, empMapped);

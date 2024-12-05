@@ -51,7 +51,7 @@ namespace BethanysPieShopHRM.Shared.Domain
 
         public List<TimeRegistration> TimeRegistrations { get; set; }
 
-        [NotMapped]
+        [NotMapped] // This attribute is used to store these properties in memory
         public byte[]? ImageContent { get; set; }
         public string? ImageName { get; set; }
     }

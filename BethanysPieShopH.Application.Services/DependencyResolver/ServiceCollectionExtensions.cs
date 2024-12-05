@@ -10,6 +10,7 @@ using BethanysPieShopHRM.Application.Services.Employees;
 using BethanysPieShopHRM.Application.Services.JobCategories;
 using BethanysPieShopHRM.Application.Services.TimeRegistrations;
 using BethanysPieShopHRM.Application.State;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BethanysPieShopH.Application.Services.DependencyResolver
@@ -26,6 +27,8 @@ namespace BethanysPieShopH.Application.Services.DependencyResolver
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ITimeRegistrationService, TimeRegistrationService>();
             services.AddScoped<ApplicationState>();
+            
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
     }
 }
