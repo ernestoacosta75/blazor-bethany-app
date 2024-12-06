@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -16,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BethanysPieShopH.Application.Services\BethanysPieShopH.Application.Services.csproj" />
+    <ProjectReference Include="..\BethanysPieShopHRM.Client\BethanysPieShopHRM.Client.csproj" />
     <ProjectReference Include="..\BethanysPieShopHRM.Common\BethanysPieShopHRM.Common.csproj" />
     <ProjectReference Include="..\BethanysPieShopHRM.Infrastructure\BethanysPieShopHRM.Infrastructure.csproj" />
     <ProjectReference Include="..\BethanysPieShopHRM.Shared\BethanysPieShopHRM.Shared.csproj" />

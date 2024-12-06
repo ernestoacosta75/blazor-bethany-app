@@ -1,6 +1,7 @@
 using BethanysPieShopH.Application.Services.DependencyResolver;
 using BethanysPieShopHRM.Components;
 using BethanysPieShopHRM.Infrastructure.DependencyResolver;
+using Microsoft.AspNetCore.HttpLogging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,8 @@ var configuration = new ConfigurationBuilder()
 // Add services to the container.
 builder.Services
     .AddRazorComponents()
-    .AddInteractiveServerComponents();
+    .AddInteractiveServerComponents()
+    .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddInfrastructure(configuration);
 builder.Services.AddApplication();
@@ -34,6 +36,8 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+    .AddInteractiveServerRenderMode()
+    .AddInteractiveWebAssemblyRenderMode()
+    .AddAdditionalAssemblies(typeof(BethanysPieShopHRM.Client._Imports).Assembly);
 
 app.Run();
