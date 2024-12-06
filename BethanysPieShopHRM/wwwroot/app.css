@@ -12471,3 +12471,9 @@ h6, .h6 {
     max-height: 500px;
     overflow-y: auto;
 }
+
+.validation-error {
+    color: red;
+    font-weight: bold;
+}
+
