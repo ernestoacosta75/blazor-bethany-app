@@ -11,7 +11,8 @@
     <br />
     <div class="col-12 row">
         <div class="col-2 text-center">
-            <img src="@($"https://gillcleerenpluralsight.blob.core.windows.net/person/{Employee.Id}.jpg")" class="img-fluid rounded-circle employee-detail-img" />
+            @* <img src="@($"https://gillcleerenpluralsight.blob.core.windows.net/person/{Employee.Id}.jpg")" class="img-fluid rounded-circle employee-detail-img" /> *@
+            <img src="@Employee.ImageName" class="employee-img rounded-circle img-fluid" />
         </div>
         
         @if (Employee.IsOnHoliday)
