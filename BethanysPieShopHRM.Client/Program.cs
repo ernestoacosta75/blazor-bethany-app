@@ -1,6 +1,7 @@
 using BethanysPieShopHRM.Application.Services.Employees;
 using BethanysPieShopHRM.Client.Profiles;
 using BethanysPieShopHRM.Client.Services;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -13,6 +14,7 @@ builder.Services.AddScoped(sp =>
 );
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<IEmployeeService, ClientEmployeeService>();
 
 await builder.Build().RunAsync();

@@ -80,19 +80,12 @@ namespace BethanysPieShopH.Application.Services.Employees
 
         public async Task<IEnumerable<EmployeeDto>> GetAllEmployees()
         {
-            string cacheKey = "EmployeeDto_List";
+            var employeeEntities = _employeeRepository.GetAll();
 
-            if (!_cacheService.TryGet(cacheKey, out List<EmployeeDto> employeesList))
-            {
-                var employeeEntities = _employeeRepository.GetAll();
+            var employeesList = await _mapper.ProjectTo<EmployeeDto>(employeeEntities)
+                .OrderBy(_ => _.Id)
+                .ToListAsync();
 
-                employeesList = await _mapper.ProjectTo<EmployeeDto>(employeeEntities)
-                    .OrderBy(_ => _.Id)
-                    .ToListAsync();
-
-                _cacheService.Set(cacheKey, employeesList, TimeSpan.FromMinutes(10));
-            }
-                
             return employeesList;
         }
     }
