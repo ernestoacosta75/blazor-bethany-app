@@ -3,7 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace BethanysPieShopH.Application.Services.Cache
 {
-    internal class InMemoryCacheService : ICacheService
+    public class InMemoryCacheService : ICacheService
     {
         private readonly IMemoryCache _memoryCache;
 

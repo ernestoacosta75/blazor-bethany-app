@@ -6,6 +6,7 @@ using BethanysPieShopHTM.Core.DomainServices.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using BethanysPieShopHRM.Application.Services.Cache;
 
 namespace BethanysPieShopH.Application.Services.Employees
 {
@@ -15,18 +16,23 @@ namespace BethanysPieShopH.Application.Services.Employees
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ICacheService _cacheService;
 
-        public EmployeeService(IRepository<Employee> employeeRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor)
+        public EmployeeService(IRepository<Employee> employeeRepository, IMapper mapper,
+            IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor,
+            ICacheService cacheService)
         {
             ArgumentNullException.ThrowIfNull(employeeRepository);
             ArgumentNullException.ThrowIfNull(mapper);
             ArgumentNullException.ThrowIfNull(webHostEnvironment);
             ArgumentNullException.ThrowIfNull(httpContextAccessor);
+            ArgumentNullException.ThrowIfNull(cacheService);
 
             _employeeRepository = employeeRepository;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
             _httpContextAccessor = httpContextAccessor;
+            _cacheService = cacheService;
         }
 
         public async Task<EmployeeDto?> AddEmployee(EmployeeDto employeeDto)
@@ -74,10 +80,20 @@ namespace BethanysPieShopH.Application.Services.Employees
 
         public async Task<IEnumerable<EmployeeDto>> GetAllEmployees()
         {
-            var employees = _employeeRepository.GetAll();
-            return await _mapper.ProjectTo<EmployeeDto>(employees)
-                .OrderBy(_ => _.Id)
-                .ToListAsync();
+            string cacheKey = "EmployeeDto_List";
+
+            if (!_cacheService.TryGet(cacheKey, out List<EmployeeDto> employeesList))
+            {
+                var employeeEntities = _employeeRepository.GetAll();
+
+                employeesList = await _mapper.ProjectTo<EmployeeDto>(employeeEntities)
+                    .OrderBy(_ => _.Id)
+                    .ToListAsync();
+
+                _cacheService.Set(cacheKey, employeesList, TimeSpan.FromMinutes(10));
+            }
+                
+            return employeesList;
         }
     }
 }
