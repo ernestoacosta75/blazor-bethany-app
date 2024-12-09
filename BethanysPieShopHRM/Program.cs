@@ -1,4 +1,5 @@
 using BethanysPieShopH.Application.Services.DependencyResolver;
+using BethanysPieShopHRM.Application.Services.Employees;
 using BethanysPieShopHRM.Components;
 using BethanysPieShopHRM.Infrastructure.DependencyResolver;
 using Microsoft.AspNetCore.HttpLogging;
@@ -39,5 +40,7 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(BethanysPieShopHRM.Client._Imports).Assembly);
+
+app.MapGet("/api/employees", async (IEmployeeService employeeService) => await employeeService.GetAllEmployees());
 
 app.Run();
