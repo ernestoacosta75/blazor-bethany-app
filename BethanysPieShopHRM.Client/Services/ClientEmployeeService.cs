@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using BethanysPieShopHRM.Application.Dtos;
 using BethanysPieShopHRM.Application.Services.Employees;
-using BethanysPieShopHRM.Common;
+using BethanysPieShopHRM.Shared;
 using Blazored.LocalStorage;
 
 namespace BethanysPieShopHRM.Client.Services

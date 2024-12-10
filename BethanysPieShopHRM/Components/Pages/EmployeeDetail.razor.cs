@@ -1,6 +1,7 @@
 ﻿using BethanysPieShopHRM.Application.Dtos;
 using BethanysPieShopHRM.Application.Services.Employees;
 using BethanysPieShopHRM.Application.Services.TimeRegistrations;
+using BethanysPieShopHRM.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 using Microsoft.AspNetCore.Components.QuickGrid;
@@ -21,6 +22,7 @@ namespace BethanysPieShopHRM.Components.Pages
         protected int queryableCount = 0;
 
         public PaginationState pagination = new() { ItemsPerPage = 10 };
+        public List<Marker> MapMarkers { get; set; } = new List<Marker>();
 
         [Inject]
         public IEmployeeService? EmployeeService { get; set; }
@@ -28,7 +30,7 @@ namespace BethanysPieShopHRM.Components.Pages
         [Inject]
         public ITimeRegistrationService? TimeRegistrationService { get; set; }
         
-        protected override async Task OnParametersSetAsync()
+        protected override async Task OnInitializedAsync()
         {
             if (EmployeeService is not null)
             {
@@ -39,6 +41,20 @@ namespace BethanysPieShopHRM.Components.Pages
                 .AsQueryable();
 
             queryableCount = itemsQueryable.Count();
+
+            if (Employee.Longitude.HasValue && Employee.Latitude.HasValue)
+            {
+                MapMarkers = new List<Marker>
+                {
+                    new Marker
+                    {
+                        Description = $"{Employee.FirstName} {Employee.LastName}",  
+                        ShowPopup = false, 
+                        X = Employee.Longitude.Value, 
+                        Y = Employee.Latitude.Value
+                    }
+                };
+            }
         }
 
 

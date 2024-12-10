@@ -2,7 +2,7 @@
 using BethanysPieShopHRM.Application.Services.Countries;
 using BethanysPieShopHRM.Application.Services.Employees;
 using BethanysPieShopHRM.Application.Services.JobCategories;
-using BethanysPieShopHRM.Common;
+using BethanysPieShopHRM.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 

@@ -129,44 +129,16 @@
                         <label type="text" readonly class="form-control-plaintext">@Employee.ExitDate?.ToShortDateString()</label>
                     </div>
                 </div>
-
             </div>
+            @if (MapMarkers.Count > 0)
+            {
+                <div class="col-12 col-xxl-4">
+                    <Map Zoom="10" Markers="MapMarkers"></Map>
+                </div>
+            }
         </div>
         
         <h2>Time registrations</h2>
-
-@*         <div class="virtualized">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Start time</th>
-                    <th>End time</th>
-                    <th>Task</th>
-                </tr>
-                </thead>
-                <tbody>
-                <Virtualize ItemsProvider="LoadTimeRegistrations" ItemSize="itemHeight">
-                    <ItemContent>
-                        <tr>
-                            <td>@context.TimeRegistrationId</td>
-                            <td>@context.StartTime</td>
-                            <td>@context.EndTime</td>
-                            <td>@context.PerformedTaskDescription</td>
-                        </tr>
-                    </ItemContent>
-                    <Placeholder>
-                        <tr>
-                            <td>Loading...</td>
-                            <td>Loading...</td>
-                            <td>Loading...</td>
-                            <td>Loading...</td>
-                        </tr>
-                    </Placeholder>
-                </Virtualize>
-                </tbody>
-            </table>
-        </div> *@
         
         @if (queryableCount > 0)
         {
