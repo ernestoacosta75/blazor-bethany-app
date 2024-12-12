@@ -20,6 +20,7 @@
     <ProjectReference Include="..\BethanysPieShopHRM.Client\BethanysPieShopHRM.Client.csproj" />
     <ProjectReference Include="..\BethanysPieShopHRM.Infrastructure\BethanysPieShopHRM.Infrastructure.csproj" />
     <ProjectReference Include="..\BethanysPieShopHRM.Shared\BethanysPieShopHRM.Shared.csproj" />
+    <ProjectReference Include="..\BethatnysPieShopHRM.ComponentsLibrary\BethatnysPieShopHRM.ComponentsLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>

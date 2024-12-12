@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace BethanysPieShopHRM.Components
+namespace BethatnysPieShopHRM.ComponentsLibrary
 {
     public partial class Map
     {
@@ -10,7 +10,7 @@ namespace BethanysPieShopHRM.Components
 
         [Parameter]
         public double Zoom { get; set; }
-        
+
         [Parameter]
         public List<Marker> Markers { get; set; }
 
