@@ -1,8 +1,11 @@
 using BethanysPieShopH.Application.Services.DependencyResolver;
 using BethanysPieShopHRM.Application.Services.Employees;
 using BethanysPieShopHRM.Components;
+using BethanysPieShopHRM.Components.Account;
 using BethanysPieShopHRM.Infrastructure.DependencyResolver;
-using Microsoft.AspNetCore.HttpLogging;
+using BlazorAuthentication.Data;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,27 @@ builder.Services
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddInfrastructure(configuration);
+
+//Authentication begin
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<IdentityUserAccessor>();
+builder.Services.AddScoped<IdentityRedirectManager>();
+builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = IdentityConstants.ApplicationScheme;
+    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+})
+.AddIdentityCookies();
+
+builder.Services.AddIdentityCore<ApplicationUser>(options =>
+    options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddSignInManager()
+    .AddDefaultTokenProviders();
+//Authentication end
+
 builder.Services.AddApplication();
 
 var app = builder.Build();
@@ -42,5 +66,7 @@ app.MapRazorComponents<App>()
     .AddAdditionalAssemblies(typeof(BethanysPieShopHRM.Client._Imports).Assembly);
 
 app.MapGet("/api/employees", async (IEmployeeService employeeService) => await employeeService.GetAllEmployees());
+
+app.MapAdditionalIdentityEndpoints();
 
 app.Run();
