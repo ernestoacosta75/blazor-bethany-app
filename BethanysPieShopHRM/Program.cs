@@ -2,8 +2,8 @@ using BethanysPieShopH.Application.Services.DependencyResolver;
 using BethanysPieShopHRM.Application.Services.Employees;
 using BethanysPieShopHRM.Components;
 using BethanysPieShopHRM.Components.Account;
+using BethanysPieShopHRM.Data;
 using BethanysPieShopHRM.Infrastructure.DependencyResolver;
-using BlazorAuthentication.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 
@@ -27,7 +27,7 @@ builder.Services.AddInfrastructure(configuration);
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
-builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, PersistingServerAuthenticationStateProvider>();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -36,11 +36,17 @@ builder.Services.AddAuthentication(options =>
 })
 .AddIdentityCookies();
 
+#if DEBUG
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+#endif
+
 builder.Services.AddIdentityCore<ApplicationUser>(options =>
     options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
+
+
 //Authentication end
 
 builder.Services.AddApplication();

@@ -11,16 +11,12 @@ namespace BethanysPieShopHTM.Core.DomainServices.DependencyResolver
     {
         public static void AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
         {
-            string? connectionString = configuration.GetConnectionString("DefaultConnection");
+            var connectionString = configuration.GetConnectionString("DefaultConnection") ?? 
+                                   throw new InvalidOperationException("No connection string found in configuration.");
 
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                throw new InvalidOperationException("No connection string found in configuration.");
-            }
-
-            // Using AddDbContextFactory because in the Blazor scenario,
-            // whenever the components are using the interactive server mode, AddDbContext isn't ideal.
-            // The reason is that the database contex would then be shared across components across the circuit,
+            // Using AddDbContextFactory because in the Blazor scenario, whenever the components are using the
+            // interactive server mode, AddDbContext isn't ideal.
+            // The reason is that the database context would then be shared across components across the circuit,
             // which can cause problems.
             services.AddDbContextFactory<AppDbContext>(options =>
                     options
